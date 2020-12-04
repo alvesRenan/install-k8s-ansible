@@ -19,8 +19,8 @@ K8S_MASTER_INTERNAL_IP=172.31.24.100
 
 ## Configurando a versão que será instalada
 
-- Nesse arquivo de [vars](roles/install-docker/vars) você pode modificar a versão do Docker que vai ser instalada.
-- Nesse arquivo de [vars](roles/install-kubernetes/vars) você pode modificar a versão do kubeadm, kublet e kubectl que vão ser instaladas.
+- Nesse arquivo de [vars](roles/install-docker/vars/main.yml) você pode modificar a versão do Docker que vai ser instalada.
+- Nesse arquivo de [vars](roles/install-kubernetes/vars/main.yml) você pode modificar a versão do kubeadm, kublet e kubectl que vão ser instaladas.
 
 ## Antes de executar o Ansible
 Se certificar de que as máquinas conseguem executar comandos em modo sudo sem precisar de senha e também configurar o acesso ssh sem seha para as máquinas. Também lembrar de liberar o tráfego interno na rede das máquinas.
