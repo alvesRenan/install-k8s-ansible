@@ -1,0 +1,8 @@
+[k8s-master]
+master      ansible_host=
+
+[k8s-workers]
+worker-1    ansible_host=
+
+[all:vars]
+K8S_MASTER_INTERNAL_IP=

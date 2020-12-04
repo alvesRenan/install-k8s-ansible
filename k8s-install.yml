@@ -1,0 +1,36 @@
+---
+- name: Docker installation
+  hosts: all
+  gather_facts: no
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  roles:
+    - install-docker
+
+- name: Kubernetes installation
+  hosts: all
+  gather_facts: no
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  roles:
+    - install-kubernetes
+
+- name: Create cluster on master node
+  hosts: k8s-master
+  gather_facts: no
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  roles:
+    - configure-main-node
+
+- name: Join worker nodes
+  gather_facts: no
+  hosts: k8s-workers
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  roles:
+    - configure-worker-node

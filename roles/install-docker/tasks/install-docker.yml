@@ -1,0 +1,36 @@
+---
+  - name: Update system
+    package:
+      name: "*"
+      state: latest
+  
+  - name: Install common packages
+    package:
+      name: "{{ common_packages }}"
+      state: present
+  
+  - name: Add Docker GPG apt Key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+  
+  - name: Add Docker Repository
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu bionic stable
+      state: present
+
+  - name: Update system
+    package:
+      name: "*"
+      state: latest
+  
+  - name: Install Docker
+    shell: apt install -y --allow-downgrades {{ item }}
+    with_items: "{{ docker_packages }}"
+  
+  - name: Restart docker service
+    systemd:
+      name: docker
+      state: restarted
+      daemon_reload: yes
+    

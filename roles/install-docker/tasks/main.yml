@@ -1,0 +1,3 @@
+---
+- name: Install communs
+  include: install-docker.yml

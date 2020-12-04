@@ -1,0 +1,5 @@
+---
+k8s_network_cidr: "10.244.0.0/16"
+k8s_prefliht_ignore: "all"
+k8s_init_options: "--pod-network-cidr={{ k8s_network_cidr }} --ignore-preflight-errors={{ k8s_prefliht_ignore }}"
+k8s_flannel_yml: "https://raw.githubusercontent.com/coreos/flannel/62e44c867a2846fefb68bd5f178daf4da3095ccb/Documentation/kube-flannel.yml"

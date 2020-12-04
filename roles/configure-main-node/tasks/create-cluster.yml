@@ -1,0 +1,51 @@
+---
+- name: Initializing the cluster
+  command: kubeadm init {{ k8s_init_options }}
+
+- name: Ensure .kube directory exists
+  file:
+    path: ~/.kube
+    state: directory
+
+- name: Get user uid
+  command: id -u
+  register: USER
+
+- name: Get user group id
+  command: id -g
+  register: GROUP
+
+- name: Copy config file for user
+  copy:
+    remote_src: yes
+    src: /etc/kubernetes/admin.conf
+    dest: ~/.kube/config
+    owner: "{{ USER.stdout }}"
+    group: "{{ GROUP.stdout }}"
+
+- name: Configure Flannel
+  command: kubectl apply -f {{ k8s_flannel_yml }}
+
+- name: Remove pod schedule restriction for master node
+  command: kubectl taint nodes --all node-role.kubernetes.io/master-
+
+- name: Get cluster token
+  shell: kubeadm token list | cut -d ' ' -f1 | sed -n '2p'
+  register: K8S_TOKEN
+
+- name: Get cluster CA Hash
+  shell: openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+  register: K8S_CA_HASH
+
+- name: Save token and hash
+  add_host:
+    name: "K8S_TOKEN_HOLDER"
+    token: "{{ K8S_TOKEN.stdout }}"
+    hash: "{{ K8S_CA_HASH.stdout }}"
+
+- name: Check saved token
+  debug:
+    msg: "[Master] K8S_TOKEN_HOLDER K8S token is {{ hostvars['K8S_TOKEN_HOLDER']['token'] }}"
+- name: Check saved hash
+  debug:
+    msg: "[Master] K8S_TOKEN_HOLDER K8S Hash is  {{ hostvars['K8S_TOKEN_HOLDER']['hash'] }}"

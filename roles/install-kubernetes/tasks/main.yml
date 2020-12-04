@@ -1,0 +1,3 @@
+---
+- name: Install Kubernetes
+  include: install-k8s.yml

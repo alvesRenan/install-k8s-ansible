@@ -1,0 +1,3 @@
+---
+- name: Join nodes
+  include: join-nodes.yml

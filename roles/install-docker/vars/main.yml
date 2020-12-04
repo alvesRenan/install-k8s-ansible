@@ -1,0 +1,14 @@
+# Needed packages
+common_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg-agent
+  - software-properties-common
+
+# Docker
+docker_version: "5:18.09.7~3-0~ubuntu-bionic"
+docker_packages:
+  - "docker-ce={{ docker_version }}"
+  - "docker-ce-cli={{ docker_version }}"
+  - containerd.io

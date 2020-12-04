@@ -1,0 +1,5 @@
+k8s_version: "1.15.3-00"
+k8s_packages:
+  - "kubeadm={{ k8s_version }}"
+  - "kubectl={{ k8s_version }}"
+  - "kubelet={{ k8s_version }}"

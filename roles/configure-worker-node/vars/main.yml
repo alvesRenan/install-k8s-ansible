@@ -1,0 +1,4 @@
+---
+k8s_join_token: "--token={{ hostvars['K8S_TOKEN_HOLDER']['token'] }}"
+k8s_join_hash: "--discovery-token-ca-cert-hash sha256:{{ hostvars['K8S_TOKEN_HOLDER']['hash'] }}"
+k8s_join_options: "{{ k8s_join_token }} {{ k8s_join_hash }}"
